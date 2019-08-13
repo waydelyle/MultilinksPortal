@@ -4,11 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { SharedHeaderComponent } from './components/shared/header/shared-header.component';
+import { SharedFooterComponent } from './components/shared/footer/shared-footer.component';
 
 @NgModule({
    declarations: [
       AppComponent,
-      SharedHeaderComponent
+      SharedHeaderComponent,
+      SharedFooterComponent
    ],
    imports: [
       RouterModule.forRoot([]),
