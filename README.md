@@ -1,27 +1,29 @@
-# MultilinksPortal
+# Multilinks Portal
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.0.
+TODO: Porject description here
 
-## Development server
+## Getting Things Up & Running
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+   * Clone repository => git clone https://github.com/ChrisDinhNZ/MultilinksPortal.git
+   * Open Git Bash integrated terminal in Visual Studio Code
+   * Change to ssl directory => [PATH_TO_REPO_FOLDER]/ssl
+   * Generate key/cert pair => bash generate.sh
+   * Add generated certificate to trusted list:
+      + In File Explorer, double click on "server.crt"
+      + Click "Install Certificate"
+      + Select to store the certificate for "Current User" or "Local Machine" then click "Next"
+      + Select "Place all certificates in the following store" then click "Browse"
+      + Select "Trusted Root Certification Authorities" then click "OK"
+      + Click "Next"
+      + Click "Finish"
+      + Click "OK" to close remaining dialogs
+   * Return to root project directory => [PATH_TO_REPO_FOLDER]
+   * Restore project dependencies => npm install
+   * Web Console should now be ready to launch => ng serve -o
 
-## Code scaffolding
+## Build and deploy
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+   * Install `angular-cli-ghpages` npm package.
+   * Run `ng build --prod` to build project for production.
+   * Run `ngh --dir dist/MultilinksDocs` to deploy to gh-pages branch.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
