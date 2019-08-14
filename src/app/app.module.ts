@@ -5,16 +5,21 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { SharedHeaderComponent } from './components/shared/header/shared-header.component';
 import { SharedFooterComponent } from './components/shared/footer/shared-footer.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       SharedHeaderComponent,
-      SharedFooterComponent
+      SharedFooterComponent,
+      HomeComponent,
    ],
    imports: [
-      RouterModule.forRoot([]),
-      BrowserModule
+      BrowserModule,
+      RouterModule.forRoot([
+         { path: 'home', component: HomeComponent },
+         { path: '**', redirectTo: 'home' }
+      ])
    ],
    providers: [],
    bootstrap: [AppComponent]

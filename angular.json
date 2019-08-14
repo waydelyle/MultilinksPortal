@@ -26,13 +26,15 @@
                   "styles": [
                      "src/assets/vendor/bootstrap/css/bootstrap.min.css",
                      "src/assets/vendor/metisMenu/metisMenu.min.css",
-                     "src/styles.css"
+                     "src/styles.css",
+                     "src/assets/css/parallax-slideshow.css"
                   ],
                   "scripts": [
                      "src/assets/vendor/jquery/jquery.min.js",
                      "src/assets/vendor/bootstrap/js/bootstrap.min.js",
                      "src/assets/vendor/metisMenu/metisMenu.min.js",
-                     "src/assets/js/scripts.js"
+                     "src/assets/js/scripts.js",
+                     "src/assets/js/parallax-slideshow.js"
                   ]
                },
                "configurations": {
