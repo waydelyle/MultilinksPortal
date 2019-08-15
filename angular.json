@@ -34,7 +34,8 @@
                      "src/assets/vendor/bootstrap/js/bootstrap.min.js",
                      "src/assets/vendor/metisMenu/metisMenu.min.js",
                      "src/assets/js/scripts.js",
-                     "src/assets/js/parallax-slideshow.js"
+                     "src/assets/js/parallax-slideshow.js",
+                     "node_modules/particles.js/particles.js"
                   ]
                },
                "configurations": {
