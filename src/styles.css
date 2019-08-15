@@ -194,10 +194,14 @@ a:active {
 
 @media (min-width: 768px) {
    .sidebar {
-      z-index: 1;
-      position: absolute;
+      z-index: -1;
+      position: fixed;
       width: 250px;
-      margin-top: 51px;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow-x: hidden;
+      padding-top: 20px;
    }
 
    .navbar-top-links .dropdown-messages,
