@@ -25,5 +25,5 @@ TODO: Porject description here
 
    * Install `angular-cli-ghpages` npm package.
    * Run `ng build --prod` to build project for production.
-   * Run `ngh --dir dist/MultilinksPortal --cname portal.multilinks.io` to deploy to gh-pages branch.
+   * Run `ngh --dir dist/MultilinksPortal` to deploy to gh-pages branch.
 
