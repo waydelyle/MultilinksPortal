@@ -9,5 +9,7 @@ export class HomeComponent {
 
    constructor() {}
    
-   ngOnInit() {}
+   ngOnInit() {
+      particlesJS.load('particles', '../../../assets/js/particles.json', () => {})
+   }
 }
