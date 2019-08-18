@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 
 export class SharedHeaderComponent {
 
-   private releaseInfo: string;
+   releaseInfo: string;
    
    constructor() {
       this.releaseInfo = `${environment.releaseInfo.type} ${environment.releaseInfo.version}`
