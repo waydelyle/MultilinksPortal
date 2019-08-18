@@ -1,4 +1,5 @@
 ﻿import { Component } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
    selector: 'shared-header',
@@ -7,8 +8,9 @@
 
 export class SharedHeaderComponent {
 
-   backToHome() {
-      console.log("We should redirect to the web portal");
-      // this.router.navigateByUrl(`${environment.web_console}`);
+   private releaseInfo: string;
+   
+   constructor() {
+      this.releaseInfo = `${environment.releaseInfo.type} ${environment.releaseInfo.version}`
    }
 }
