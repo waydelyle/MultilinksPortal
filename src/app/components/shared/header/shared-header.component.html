@@ -7,8 +7,8 @@
          <span class="icon-bar"></span>
       </button>
       <div class="container">
-         <a class="navbar-brand text-primary text-uppercase" (click)="backToHome()">
-            <span>Multilinks</span>&nbsp;<span class="text-tertiary text-lowercase">pre-alpha 0.01.02</span>
+         <a class="navbar-brand text-primary text-uppercase" [routerLink]="['/']">
+            <span>Multilinks</span>&nbsp;<span class="text-tertiary text-lowercase">{{releaseInfo}}</span>
          </a>
       </div>
    </div>
@@ -17,7 +17,7 @@
       <div class="sidebar-nav navbar-collapse">
          <ul class="nav" id="side-menu">
             <li>
-               <a href="index.html"><i class="fa fa-info" aria-hidden="true"></i>&nbsp;&nbsp;About Multilinks</a>
+               <a href="#"><i class="fa fa-info" aria-hidden="true"></i>&nbsp;&nbsp;About Multilinks</a>
             </li>
             <li>
                <a href="#"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;&nbsp;Documentation<span class="fa arrow"></span></a>
