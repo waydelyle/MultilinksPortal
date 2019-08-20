@@ -1,5 +1,5 @@
 ﻿import { Component } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { AppEnvironment } from 'src/app/services/app-environment.service';
 
 @Component({
    selector: 'shared-header',
@@ -10,7 +10,7 @@ export class SharedHeaderComponent {
 
    releaseInfo: string;
    
-   constructor() {
-      this.releaseInfo = `${environment.releaseInfo.type} ${environment.releaseInfo.version}`
+   constructor(private appEnv: AppEnvironment) {
+      this.releaseInfo = this.appEnv.getReleaseInfo();
    }
 }
