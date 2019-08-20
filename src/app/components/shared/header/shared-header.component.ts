@@ -11,6 +11,6 @@ export class SharedHeaderComponent {
    releaseInfo: string;
    
    constructor(private appEnv: AppEnvironment) {
-      this.releaseInfo = appEnv.getReleaseInfo();
+      this.releaseInfo = this.appEnv.getReleaseInfo();
    }
 }

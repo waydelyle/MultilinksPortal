@@ -7,13 +7,15 @@ import { SharedHeaderComponent } from './components/shared/header/shared-header.
 import { SharedFooterComponent } from './components/shared/footer/shared-footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { AppEnvironment } from './services/app-environment.service';
+import { GuestNavbarTopComponent } from './components/shared/header/guest-navbar-top.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       SharedHeaderComponent,
       SharedFooterComponent,
-      HomeComponent
+      HomeComponent,
+      GuestNavbarTopComponent
    ],
    imports: [
       BrowserModule,
