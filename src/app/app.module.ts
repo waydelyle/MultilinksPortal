@@ -6,13 +6,14 @@ import { AppComponent } from './app.component';
 import { SharedHeaderComponent } from './components/shared/header/shared-header.component';
 import { SharedFooterComponent } from './components/shared/footer/shared-footer.component';
 import { HomeComponent } from './components/home/home.component';
+import { AppEnvironment } from './services/app-environment.service';
 
 @NgModule({
    declarations: [
       AppComponent,
       SharedHeaderComponent,
       SharedFooterComponent,
-      HomeComponent,
+      HomeComponent
    ],
    imports: [
       BrowserModule,
@@ -21,7 +22,9 @@ import { HomeComponent } from './components/home/home.component';
          { path: '**', redirectTo: 'home' }
       ])
    ],
-   providers: [],
+   providers: [
+      AppEnvironment
+   ],
    bootstrap: [AppComponent]
 })
 export class AppModule { }
