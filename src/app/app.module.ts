@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AppEnvironment } from './services/app-environment.service';
 import { GuestNavbarTopComponent } from './components/shared/header/guest-navbar-top.component';
 import { ErrorsHandler } from './services/errors-handler.service';
+import { MultilinksIdentityService } from './services/multilinks-identity.service';
 
 @NgModule({
    declarations: [
@@ -29,7 +30,8 @@ import { ErrorsHandler } from './services/errors-handler.service';
       { provide: 'BASE_URL', useFactory: getBaseUrl },
       { provide: ErrorHandler, useClass: ErrorsHandler },
       AppEnvironment,
-      ErrorsHandler
+      ErrorsHandler,
+      MultilinksIdentityService
    ],
    bootstrap: [AppComponent]
 })
