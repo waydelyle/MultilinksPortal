@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { MultilinksIdentityService } from './services/multilinks-identity.service';
 
 @Component({
    selector: 'app-root',
@@ -7,10 +7,25 @@ import { Router } from '@angular/router';
 })
 
 export class AppComponent {
-   
-   constructor(private router: Router) {}
+
+   loadingInProgress: boolean = true;
+   connectionActive: boolean;
+
+   constructor(private identityService: MultilinksIdentityService) {}
 
    ngOnInit() {
-      this.router.navigate(['home']);
+      var path = window.location.pathname;
+
+      if (path == '/identity-signin-callback' || path == '/identity-signout-callback') {
+         this.loadingInProgress = false;
+         return;
+      }
+
+      if (this.identityService.isLoggedIn && !this.identityService.userAvailable) {
+         this.identityService.triggerSignIn();
+      }
+      else {
+         this.loadingInProgress = false;
+      }
    }
 }
