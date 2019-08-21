@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -8,6 +8,8 @@ import { SharedFooterComponent } from './components/shared/footer/shared-footer.
 import { HomeComponent } from './components/home/home.component';
 import { AppEnvironment } from './services/app-environment.service';
 import { GuestNavbarTopComponent } from './components/shared/header/guest-navbar-top.component';
+import { ErrorsHandler } from './services/errors-handler.service';
+import { MultilinksIdentityService } from './services/multilinks-identity.service';
 
 @NgModule({
    declarations: [
@@ -25,8 +27,17 @@ import { GuestNavbarTopComponent } from './components/shared/header/guest-navbar
       ])
    ],
    providers: [
-      AppEnvironment
+      { provide: 'BASE_URL', useFactory: getBaseUrl },
+      { provide: ErrorHandler, useClass: ErrorsHandler },
+      AppEnvironment,
+      ErrorsHandler,
+      MultilinksIdentityService
    ],
    bootstrap: [AppComponent]
 })
+
 export class AppModule { }
+
+export function getBaseUrl() {
+   return document.getElementsByTagName('base')[0].href;
+}
