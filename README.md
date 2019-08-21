@@ -19,7 +19,7 @@ TODO: Porject description here
       + Click "OK" to close remaining dialogs
    * Return to root project directory => [PATH_TO_REPO_FOLDER]
    * Restore project dependencies => npm install
-   * Web Console should now be ready to launch => ng serve -o
+   * Web Portal should now be ready to launch => ng serve -o
 
 ## Build and deploy
 
