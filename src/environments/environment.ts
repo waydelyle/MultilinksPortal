@@ -24,7 +24,8 @@ export const environment = {
    },
    multilinksCoreInfo: {
       loginEndpoint:                'https://localhost:44301/api/endpoints/login/Web%20Portal',
-      linksEndpoint:                'https://localhost:44301/api/endpointlinks'
+      linksEndpoint:                'https://localhost:44301/api/endpointlinks',
+      notificationsEndpoint:        'https://localhost:44301/api/notifications'
    }
 };
 

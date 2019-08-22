@@ -9,6 +9,8 @@ import { LinkPendingDetail } from '../models/link-pending-detail.model';
 import { LinkDetail } from '../models/link-detail.model';
 import { LinkRequestInfo } from '../models/link-request-info.model';
 import { compare } from 'fast-json-patch';
+import { NotificationCollection } from '../models/notification-collection.model';
+import { NotificationDetail } from '../models/notification-detail.model';
 
 @Injectable()
 export class MultilinksCoreService {
@@ -20,17 +22,23 @@ export class MultilinksCoreService {
    /* Links related data*/
    private linkPendingCollection: LinkPendingCollection;
    private linksCollection: LinkCollection;
-
    numberOfLinkRequestPending$ = new BehaviorSubject<number>(0);
    linkRequestsPending$ = new BehaviorSubject<LinkPendingDetail[]>([]);
    numberOfLink$ = new BehaviorSubject<number>(0);
    links$ = new BehaviorSubject<LinkDetail[]>([]);
+
+   /* Notifications related data*/
+   private newNotificationsCollection: NotificationCollection;
+   numberOfNewNotifications$ = new BehaviorSubject<number>(0);
+   newNotifications$ = new BehaviorSubject<NotificationDetail[]>([]);
 
    constructor(private http: HttpClient) {
       this.linkPendingCollection = new LinkPendingCollection();
       this.linkPendingCollection.value = new Array<LinkPendingDetail>();
       this.linksCollection = new LinkCollection();
       this.linksCollection.value = new Array<LinkDetail>();
+      this.newNotificationsCollection = new NotificationCollection();
+      this.newNotificationsCollection.value = new Array<NotificationDetail>();
    }
 
    /* This is getting current device info from the backend */
@@ -179,5 +187,64 @@ export class MultilinksCoreService {
       if (linkResult) {
          linkResult.isActive = isActive;
       }
+   }
+
+   getVisibleNotifications(limit: number, offset: number): void {
+      var url = `${environment.multilinksCoreInfo.notificationsEndpoint}`;
+
+      url = url.concat(`/new/${this.currentDevice.endpointId}?`);
+
+      if (limit != 0) {
+         url = url.concat(`&limit=${limit}`);
+      }
+
+      if (offset != 0) {
+         url = url.concat(`&offset=${offset}`);
+      }
+
+      this.http.get<NotificationCollection>(url).subscribe(data => {
+            this.newNotificationsCollection = data;
+            this.numberOfNewNotifications$.next(this.newNotificationsCollection.size);
+            this.newNotifications$.next(this.newNotificationsCollection.value);
+         },
+         (error: HttpErrorResponse) => {
+            if(error.status == 405) {
+               console.error("HTTP method not allowed");
+            }
+            else {
+               console.error(error.error.message);
+            }
+         }
+      );
+   }
+
+   sendNotificationCleared(notification: NotificationDetail) {
+      var url = `${environment.multilinksCoreInfo.notificationsEndpoint}/id/${notification.id}`;
+
+      /* We can send a diff instead of the whole object. */
+      var alteredNotification = Object.assign({}, notification);
+
+      alteredNotification.hidden = true;
+      let patchDocument = compare(notification, alteredNotification);
+
+      this.http.patch(url, patchDocument, { headers: { 'Content-Type': 'application/json-patch+json' } }).subscribe(
+         () => {
+            this.getVisibleNotifications(this.newNotificationsCollection.limit, this.newNotificationsCollection.offset);
+         },
+         (error: HttpErrorResponse) => {
+            if (error.status == 405) {
+               console.error("HTTP method not allowed");
+            }
+            else {
+               console.error(error.error.message);
+            }
+         }
+      );
+   }
+
+   notificationReceivedUpdate(notification: NotificationDetail) {
+      var size = this.newNotificationsCollection.value.push(notification);
+      this.numberOfNewNotifications$.next(size);
+      this.newNotifications$.next(this.newNotificationsCollection.value);
    }
 }
