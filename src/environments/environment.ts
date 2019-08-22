@@ -23,7 +23,8 @@ export const environment = {
       registerEndpoint:             'https://localhost:44300/account/register'
    },
    multilinksCoreInfo: {
-      loginEndpoint:                'https://localhost:44301/api/endpoints/login/Web%20Portal'
+      loginEndpoint:                'https://localhost:44301/api/endpoints/login/Web%20Portal',
+      linksEndpoint:                'https://localhost:44301/api/endpointlinks'
    }
 };
 
