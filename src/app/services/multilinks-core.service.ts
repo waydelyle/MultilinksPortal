@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DeviceDetail } from '../models/device-detail.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, timer } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LinkPendingCollection } from '../models/link-pending-collection.model';
@@ -11,6 +11,10 @@ import { LinkRequestInfo } from '../models/link-request-info.model';
 import { compare } from 'fast-json-patch';
 import { NotificationCollection } from '../models/notification-collection.model';
 import { NotificationDetail } from '../models/notification-detail.model';
+import { ExponentialBackoffRetry } from '../models/exponential-backoff-retry.model';
+import { HubConnection, HubConnectionBuilder, LogLevel, HubConnectionState } from '@aspnet/signalr';
+import { ExponentialBackoffRetryService } from './exponential-backoff-retry.service';
+import { MultilinksIdentityService } from './multilinks-identity.service';
 
 @Injectable()
 export class MultilinksCoreService {
@@ -32,13 +36,26 @@ export class MultilinksCoreService {
    numberOfNewNotifications$ = new BehaviorSubject<number>(0);
    newNotifications$ = new BehaviorSubject<NotificationDetail[]>([]);
 
-   constructor(private http: HttpClient) {
+   /* SignalR related data*/
+   private hubConnection: HubConnection;
+   private hubConnectionRetryData: ExponentialBackoffRetry;
+   connectionActive$ = new BehaviorSubject<boolean>(false);
+   reconnectionInProgress$ = new BehaviorSubject<boolean>(true);
+
+   constructor(private http: HttpClient,
+      private retryService: ExponentialBackoffRetryService,
+      private identityService: MultilinksIdentityService) {
       this.linkPendingCollection = new LinkPendingCollection();
       this.linkPendingCollection.value = new Array<LinkPendingDetail>();
       this.linksCollection = new LinkCollection();
       this.linksCollection.value = new Array<LinkDetail>();
       this.newNotificationsCollection = new NotificationCollection();
       this.newNotificationsCollection.value = new Array<NotificationDetail>();
+      this.hubConnectionRetryData = new ExponentialBackoffRetry();
+      this.hubConnectionRetryData.initialInterval = environment.multilinksCoreInfo.signalRInfo.retrySetting.initialInterval;
+      this.hubConnectionRetryData.maxInterval = environment.multilinksCoreInfo.signalRInfo.retrySetting.maxInterval;
+      this.hubConnectionRetryData.maxRetries = environment.multilinksCoreInfo.signalRInfo.retrySetting.maxRetries;
+      this.hubConnectionRetryData.additionalMaxRandomHoldoff = environment.multilinksCoreInfo.signalRInfo.retrySetting.additionalMaxRandomHoldoff;
    }
 
    /* This is getting current device info from the backend */
@@ -246,5 +263,126 @@ export class MultilinksCoreService {
       var size = this.newNotificationsCollection.value.push(notification);
       this.numberOfNewNotifications$.next(size);
       this.newNotifications$.next(this.newNotificationsCollection.value);
+   }
+
+   initiateSignalRConnection(): void {
+      /* Configure connection. */
+      this.hubConnection = new HubConnectionBuilder()
+         .withUrl(`${environment.multilinksCoreInfo.signalRInfo.hubEndpoint}?token=${this.identityService.user.access_token}&ep=${this.currentDevice.endpointId}`)
+         .configureLogging(LogLevel.Error)
+         .build();
+
+      this.hubConnection.on("LinkRequestReceived", (linkId, sourceDeviceName, sourceDeviceOwnerName) => {
+         var linkRequest = new LinkPendingDetail();
+
+         linkRequest.linkId = linkId;
+         linkRequest.sourceDeviceName = sourceDeviceName;
+         linkRequest.sourceDeviceOwnerName = sourceDeviceOwnerName;
+         this.linkRequestReceivedUpdate(linkRequest);
+      });
+
+      this.hubConnection.on("LinkConfirmationReceived", (linkId, associatedDeviceName, associatedDeviceOwnerName, isActive) => {
+         var linkDetail = new LinkDetail();
+
+         linkDetail.linkId = linkId;
+         linkDetail.associatedDeviceName = associatedDeviceName;
+         linkDetail.associatedDeviceOwnerName = associatedDeviceOwnerName;
+         linkDetail.isActive = isActive;
+         this.linkConfirmationReceivedUpdate(linkDetail);
+      });
+
+      this.hubConnection.on("NotificationReceived", (id, notificationType, message, hidden) => {
+         var notificationDetail = new NotificationDetail();
+
+         notificationDetail.id = id;
+         notificationDetail.notificationType = notificationType;
+         notificationDetail.message = message;
+         notificationDetail.hidden = hidden;
+
+         this.notificationReceivedUpdate(notificationDetail);
+      });
+
+      this.hubConnection.on("LinkActiveStateReceived", (linkId, isActive) => {
+         this.linkActiveStateReceivedUpdate(linkId, isActive);
+      });
+
+      this.hubConnection.keepAliveIntervalInMilliseconds = 10000;
+      this.hubConnection.serverTimeoutInMilliseconds = 20000;
+
+      this.hubConnection.onclose(error => {
+         this.reconnectionInProgress$.next(true);
+         this.connectionActive$.next(false);
+         this.handleSignalRConnectionFailure(error);
+      });
+
+      /* Call the start method after the on method. Doing so ensures your handlers are registered
+         before any messages are received. */
+      this.reconnectionInProgress$.next(true);
+      this.startSignalRConnection();
+   }
+
+   startSignalRConnection(): void {
+      if (this.hubConnection && this.hubConnection.state == HubConnectionState.Connected) {
+         return;
+      }
+
+      this.hubConnection.start()
+         .then(() => {
+            if (!environment.production) {
+               console.log("Connection started");
+            }
+
+            this.reconnectionInProgress$.next(false);
+            this.connectionActive$.next(true);
+            this.hubConnectionRetryData = this.retryService.resetExponentialBackoffRetryData(this.hubConnectionRetryData);
+         })
+         .catch(error => {
+            this.handleSignalRConnectionFailure(error);
+         });
+   }
+
+   reconnectSignalRConnection(): void {
+      this.reconnectionInProgress$.next(true);
+      this.startSignalRConnection();
+   }
+
+   finaliseSignalRConnection(): void {
+      if (!this.hubConnection || this.hubConnection.state == HubConnectionState.Disconnected)
+      {
+         return;
+      }
+
+      this.hubConnection.stop()
+         .then(() => {
+            if (!environment.production) {
+               console.log("Connection stopped");
+            }
+
+            this.reconnectionInProgress$.next(false);
+            this.connectionActive$.next(false);
+         })
+         .catch(err => {
+            if (!environment.production) {
+               console.error("Device failed to disconnect");
+            }
+         });
+   }
+
+   handleSignalRConnectionFailure(error : Error): void {
+      this.hubConnectionRetryData = this.retryService.updateExponentialBackoffRetryData(this.hubConnectionRetryData);
+
+      if (this.hubConnectionRetryData.retryCompleted) {
+         if (!environment.production) {
+            console.log("Connection retry completed");
+         }
+
+         this.reconnectionInProgress$.next(false);
+         this.connectionActive$.next(false);
+         return;
+      }
+
+      const holdoffTimer = timer(this.hubConnectionRetryData.totalHoldoffInterval).subscribe(() => {
+         this.startSignalRConnection();
+      });
    }
 }
