@@ -11,6 +11,7 @@ import { GuestNavbarTopComponent } from './components/shared/header/guest-navbar
 import { ErrorsHandler } from './services/errors-handler.service';
 import { MultilinksIdentityService } from './services/multilinks-identity.service';
 import { MultilinksCoreService } from './services/multilinks-core.service';
+import { ExponentialBackoffRetryService } from './services/exponential-backoff-retry.service';
 
 @NgModule({
    declarations: [
@@ -33,7 +34,8 @@ import { MultilinksCoreService } from './services/multilinks-core.service';
       AppEnvironment,
       ErrorsHandler,
       MultilinksIdentityService,
-      MultilinksCoreService
+      MultilinksCoreService,
+      ExponentialBackoffRetryService
    ],
    bootstrap: [AppComponent]
 })
