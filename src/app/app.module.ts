@@ -12,6 +12,7 @@ import { ErrorsHandler } from './services/errors-handler.service';
 import { MultilinksIdentityService } from './services/multilinks-identity.service';
 import { MultilinksCoreService } from './services/multilinks-core.service';
 import { ExponentialBackoffRetryService } from './services/exponential-backoff-retry.service';
+import { RequireAuthenticatedUserRouteGuardService } from './services/require-authenticated-user-route-guard.service';
 
 @NgModule({
    declarations: [
@@ -35,7 +36,8 @@ import { ExponentialBackoffRetryService } from './services/exponential-backoff-r
       ErrorsHandler,
       MultilinksIdentityService,
       MultilinksCoreService,
-      ExponentialBackoffRetryService
+      ExponentialBackoffRetryService,
+      RequireAuthenticatedUserRouteGuardService
    ],
    bootstrap: [AppComponent]
 })
