@@ -10,6 +10,7 @@ import { AppEnvironment } from './services/app-environment.service';
 import { GuestNavbarTopComponent } from './components/shared/header/guest-navbar-top.component';
 import { ErrorsHandler } from './services/errors-handler.service';
 import { MultilinksIdentityService } from './services/multilinks-identity.service';
+import { MultilinksCoreService } from './services/multilinks-core.service';
 
 @NgModule({
    declarations: [
@@ -31,7 +32,8 @@ import { MultilinksIdentityService } from './services/multilinks-identity.servic
       { provide: ErrorHandler, useClass: ErrorsHandler },
       AppEnvironment,
       ErrorsHandler,
-      MultilinksIdentityService
+      MultilinksIdentityService,
+      MultilinksCoreService
    ],
    bootstrap: [AppComponent]
 })

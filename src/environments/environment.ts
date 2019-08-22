@@ -21,6 +21,9 @@ export const environment = {
       },
       device_name:                  'Web%20Portal',
       registerEndpoint:             'https://localhost:44300/account/register'
+   },
+   multilinksCoreInfo: {
+      loginEndpoint:                'https://localhost:44301/api/endpoints/login/Web%20Portal'
    }
 };
 
