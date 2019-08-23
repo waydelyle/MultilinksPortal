@@ -13,6 +13,10 @@ import { MultilinksIdentityService } from './services/multilinks-identity.servic
 import { MultilinksCoreService } from './services/multilinks-core.service';
 import { ExponentialBackoffRetryService } from './services/exponential-backoff-retry.service';
 import { RequireAuthenticatedUserRouteGuardService } from './services/require-authenticated-user-route-guard.service';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AddAuthorizationHeaderInterceptor } from './intercepters/add-authorization-header-interceptor';
+import { ConnectionLoaderComponent } from './components/shared/connection-loader/connection-loader.component';
 
 @NgModule({
    declarations: [
@@ -20,10 +24,13 @@ import { RequireAuthenticatedUserRouteGuardService } from './services/require-au
       SharedHeaderComponent,
       SharedFooterComponent,
       HomeComponent,
-      GuestNavbarTopComponent
+      GuestNavbarTopComponent,
+      ConnectionLoaderComponent
    ],
    imports: [
       BrowserModule,
+      CommonModule,
+      HttpClientModule,
       RouterModule.forRoot([
          { path: 'home', component: HomeComponent },
          { path: '**', redirectTo: 'home' }
@@ -32,6 +39,7 @@ import { RequireAuthenticatedUserRouteGuardService } from './services/require-au
    providers: [
       { provide: 'BASE_URL', useFactory: getBaseUrl },
       { provide: ErrorHandler, useClass: ErrorsHandler },
+      { provide: HTTP_INTERCEPTORS, useClass: AddAuthorizationHeaderInterceptor, multi: true },
       AppEnvironment,
       ErrorsHandler,
       MultilinksIdentityService,

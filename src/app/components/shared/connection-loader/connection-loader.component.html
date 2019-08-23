@@ -1,0 +1,22 @@
+<div class="site-content-center">
+   <div class="form-box device-info animated fadeIn">
+      <div class="box-header">
+         <h4 *ngIf="connectionActive || reconnectionInProgress" class="loader-text-animate">
+            Connecting...
+         </h4>
+         <h4 *ngIf="!connectionActive && !reconnectionInProgress">
+            Failed to connect
+         </h4>
+      </div>
+      <div class="box-body">
+         <div class="loader-box">
+            <div *ngIf="connectionActive || reconnectionInProgress" class="con"></div>
+            <div *ngIf="!connectionActive && !reconnectionInProgress" class="con disconnected"></div>
+            <div *ngIf="connectionActive || reconnectionInProgress" class="byte"></div>
+         </div>
+         <div *ngIf="!connectionActive && !reconnectionInProgress" class="text-primary">
+            <button type="button" class="btn btn-outline btn-primary" (click)="connect()">Reconnect</button>
+         </div>
+      </div>
+   </div>
+</div>
