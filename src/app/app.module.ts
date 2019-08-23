@@ -14,7 +14,8 @@ import { MultilinksCoreService } from './services/multilinks-core.service';
 import { ExponentialBackoffRetryService } from './services/exponential-backoff-retry.service';
 import { RequireAuthenticatedUserRouteGuardService } from './services/require-authenticated-user-route-guard.service';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AddAuthorizationHeaderInterceptor } from './intercepters/add-authorization-header-interceptor';
 
 @NgModule({
    declarations: [
@@ -36,6 +37,7 @@ import { HttpClientModule } from '@angular/common/http';
    providers: [
       { provide: 'BASE_URL', useFactory: getBaseUrl },
       { provide: ErrorHandler, useClass: ErrorsHandler },
+      { provide: HTTP_INTERCEPTORS, useClass: AddAuthorizationHeaderInterceptor, multi: true },
       AppEnvironment,
       ErrorsHandler,
       MultilinksIdentityService,
