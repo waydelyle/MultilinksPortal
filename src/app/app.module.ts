@@ -16,6 +16,7 @@ import { RequireAuthenticatedUserRouteGuardService } from './services/require-au
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AddAuthorizationHeaderInterceptor } from './intercepters/add-authorization-header-interceptor';
+import { ConnectionLoaderComponent } from './components/shared/connection-loader/connection-loader.component';
 
 @NgModule({
    declarations: [
@@ -23,7 +24,8 @@ import { AddAuthorizationHeaderInterceptor } from './intercepters/add-authorizat
       SharedHeaderComponent,
       SharedFooterComponent,
       HomeComponent,
-      GuestNavbarTopComponent
+      GuestNavbarTopComponent,
+      ConnectionLoaderComponent
    ],
    imports: [
       BrowserModule,

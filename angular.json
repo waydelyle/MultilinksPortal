@@ -27,7 +27,8 @@
                      "src/assets/vendor/bootstrap/css/bootstrap.min.css",
                      "src/assets/vendor/metisMenu/metisMenu.min.css",
                      "src/styles.css",
-                     "src/assets/css/parallax-slideshow.css"
+                     "src/assets/css/parallax-slideshow.css",
+                     "src/assets/css/connection-loader.css"
                   ],
                   "scripts": [
                      "src/assets/vendor/jquery/jquery.min.js",

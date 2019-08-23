@@ -4,11 +4,9 @@
       <div id="page-wrapper">
          <router-outlet></router-outlet>
       </div>
+      <shared-footer></shared-footer>
    </div>
    <div *ngIf="identityService.isLoggedIn && !connectionActive">
-      <!-- <connection-loader></connection-loader> -->
-      connecting..........
+      <connection-loader></connection-loader>
    </div>
-
-   <shared-footer></shared-footer>
 </div>
