@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MultilinksIdentityService } from 'src/app/services/multilinks-identity.service';
+import { Router } from '@angular/router';
 
 @Component({
    selector: 'home',
@@ -8,10 +9,16 @@ import { MultilinksIdentityService } from 'src/app/services/multilinks-identity.
 
 export class HomeComponent {
 
-   constructor(private identityService: MultilinksIdentityService) {}
+   constructor(private identityService: MultilinksIdentityService,
+      private router: Router) {}
    
    ngOnInit() {
-      particlesJS.load('particles', '../../../assets/js/particles.json', () => {})
+      if (this.identityService.isLoggedIn) {
+         this.router.navigate(['dashboard']);
+      }
+      else {
+         particlesJS.load('particles', '../../../assets/js/particles.json', () => {})
+      }
    }
 
    register() {
