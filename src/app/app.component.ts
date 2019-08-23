@@ -17,6 +17,16 @@ export class AppComponent {
       private coreService: MultilinksCoreService) {}
 
    ngOnInit() {
+      if (this.identityService.isLoggedIn)
+      {
+         var element = document.querySelector('#page-wrapper');
+
+         if (element != null)
+         {
+            element.classList.add('sidebar-placeholder');
+         }
+      }
+
       this.coreService.deviceLoaded$.subscribe((deviceLoaded) => {
          if (deviceLoaded) {
             this.coreService.getLinksPendings(0, 0);

@@ -1,7 +1,9 @@
 <div *ngIf="!loadingInProgress" id="wrapper">
    <div *ngIf="!identityService.isLoggedIn || connectionActive">
       <shared-header></shared-header>
-      <router-outlet></router-outlet>
+      <div id="page-wrapper">
+         <router-outlet></router-outlet>
+      </div>
    </div>
    <div *ngIf="identityService.isLoggedIn && !connectionActive">
       <!-- <connection-loader></connection-loader> -->
