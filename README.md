@@ -1,6 +1,6 @@
 # Multilinks Portal
 
-TODO: Porject description here
+TODO: Project description here
 
 ## Getting Things Up & Running
 

@@ -13,6 +13,8 @@ import { MultilinksIdentityService } from './services/multilinks-identity.servic
 import { MultilinksCoreService } from './services/multilinks-core.service';
 import { ExponentialBackoffRetryService } from './services/exponential-backoff-retry.service';
 import { RequireAuthenticatedUserRouteGuardService } from './services/require-authenticated-user-route-guard.service';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
    declarations: [
@@ -24,6 +26,8 @@ import { RequireAuthenticatedUserRouteGuardService } from './services/require-au
    ],
    imports: [
       BrowserModule,
+      CommonModule,
+      HttpClientModule,
       RouterModule.forRoot([
          { path: 'home', component: HomeComponent },
          { path: '**', redirectTo: 'home' }
