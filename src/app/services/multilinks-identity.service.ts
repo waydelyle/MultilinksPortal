@@ -3,7 +3,7 @@ import { UserManager, User } from 'oidc-client';
 import { environment } from 'src/environments/environment';
 import { ReplaySubject } from 'rxjs';
 import { Router } from '@angular/router';
-import { ErrorsHandler } from './errors-handler.service';
+import { ErrorsHandler, ErrorCodes } from './errors-handler.service';
 
 @Injectable ({
    providedIn: 'root'
@@ -57,6 +57,10 @@ export class MultilinksIdentityService {
       })
       .catch(error => {
          let errorCode = this.errorsHandler.convertToErrorCode(error);
+
+         if (errorCode == ErrorCodes.SERVER_CONNECT_TIMEOUT_ERROR) {
+            
+         }
          
          this.router.navigate(['420']);
       });

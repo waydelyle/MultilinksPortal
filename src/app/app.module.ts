@@ -18,6 +18,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AddAuthorizationHeaderInterceptor } from './intercepters/add-authorization-header-interceptor';
 import { ConnectionLoaderComponent } from './components/shared/connection-loader/connection-loader.component';
 import { RegistrationConfirmedComponent } from './components/identity-service-callbacks/registration-confirmed/registration-confirmed.component';
+import { Error404Component } from './components/errors/404/404.component';
 
 @NgModule({
    declarations: [
@@ -27,7 +28,8 @@ import { RegistrationConfirmedComponent } from './components/identity-service-ca
       HomeComponent,
       GuestNavbarTopComponent,
       ConnectionLoaderComponent,
-      RegistrationConfirmedComponent
+      RegistrationConfirmedComponent,
+      Error404Component
    ],
    imports: [
       BrowserModule,
@@ -37,7 +39,8 @@ import { RegistrationConfirmedComponent } from './components/identity-service-ca
          { path: '', redirectTo: 'home', pathMatch: 'full' },
          { path: 'home', component: HomeComponent },
          { path: 'identity-registration-confirmed', component: RegistrationConfirmedComponent },
-         { path: '**', redirectTo: '404' }
+         { path: 'error-404', component: Error404Component },
+         { path: '**', redirectTo: 'error-404' }
       ])
    ],
    providers: [
