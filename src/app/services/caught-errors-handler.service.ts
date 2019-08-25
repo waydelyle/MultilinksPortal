@@ -21,7 +21,7 @@ export class CaughtErrorsHandler {
       switch (errorCode)
       {
          case ErrorCodes.NOT_FOUND_ERROR:
-            console.error("NOT_FOUND_ERROR");
+            this.router.navigate(['error-404']);
             break;
          case ErrorCodes.CLIENT_UNKNOWN_ERROR:
             console.error("CLIENT_UNKNOWN_ERROR");
@@ -33,7 +33,7 @@ export class CaughtErrorsHandler {
             console.error("SERVER_UNKNOWN_ERROR");
             break;
          case ErrorCodes.SERVER_CONNECT_TIMEOUT_ERROR:
-            console.error("SERVER_CONNECT_TIMEOUT_ERROR");
+            this.router.navigate(['error-599']);
             break;
       }
    }
