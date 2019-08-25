@@ -21,6 +21,7 @@ import { RegistrationConfirmedComponent } from './components/identity-service-ca
 import { Error404Component } from './components/errors/404/404.component';
 import { CaughtErrorsHandler } from './services/caught-errors-handler.service';
 import { Error599Component } from './components/errors/599/599.component';
+import { SigninCallbackComponent } from './components/identity-service-callbacks/signin-callback/signin-callback.component';
 
 @NgModule({
    declarations: [
@@ -32,7 +33,8 @@ import { Error599Component } from './components/errors/599/599.component';
       ConnectionLoaderComponent,
       RegistrationConfirmedComponent,
       Error404Component,
-      Error599Component
+      Error599Component,
+      SigninCallbackComponent
    ],
    imports: [
       BrowserModule,
@@ -44,6 +46,7 @@ import { Error599Component } from './components/errors/599/599.component';
          { path: 'identity-registration-confirmed', component: RegistrationConfirmedComponent },
          { path: 'error-404', component: Error404Component },
          { path: 'error-599', component: Error599Component },
+         { path: 'identity-signin-callback', component: SigninCallbackComponent },
          { path: '**', redirectTo: 'error-404' }
       ])
    ],
