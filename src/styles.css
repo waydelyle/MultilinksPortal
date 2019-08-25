@@ -687,6 +687,10 @@ table.dataTable thead .sorting:after {
    font-size: 0.8em;
 }
 
+.form-box .box-body button {
+   margin-top: 20px;
+}
+
 .form-box input {
    width: 240px;
    margin-bottom: 20px;

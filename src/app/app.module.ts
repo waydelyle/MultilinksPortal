@@ -17,6 +17,10 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AddAuthorizationHeaderInterceptor } from './intercepters/add-authorization-header-interceptor';
 import { ConnectionLoaderComponent } from './components/shared/connection-loader/connection-loader.component';
+import { RegistrationConfirmedComponent } from './components/identity-service-callbacks/registration-confirmed/registration-confirmed.component';
+import { Error404Component } from './components/errors/404/404.component';
+import { CaughtErrorsHandler } from './services/caught-errors-handler.service';
+import { Error599Component } from './components/errors/599/599.component';
 
 @NgModule({
    declarations: [
@@ -25,15 +29,22 @@ import { ConnectionLoaderComponent } from './components/shared/connection-loader
       SharedFooterComponent,
       HomeComponent,
       GuestNavbarTopComponent,
-      ConnectionLoaderComponent
+      ConnectionLoaderComponent,
+      RegistrationConfirmedComponent,
+      Error404Component,
+      Error599Component
    ],
    imports: [
       BrowserModule,
       CommonModule,
       HttpClientModule,
       RouterModule.forRoot([
+         { path: '', redirectTo: 'home', pathMatch: 'full' },
          { path: 'home', component: HomeComponent },
-         { path: '**', redirectTo: 'home' }
+         { path: 'identity-registration-confirmed', component: RegistrationConfirmedComponent },
+         { path: 'error-404', component: Error404Component },
+         { path: 'error-599', component: Error599Component },
+         { path: '**', redirectTo: 'error-404' }
       ])
    ],
    providers: [
@@ -45,7 +56,8 @@ import { ConnectionLoaderComponent } from './components/shared/connection-loader
       MultilinksIdentityService,
       MultilinksCoreService,
       ExponentialBackoffRetryService,
-      RequireAuthenticatedUserRouteGuardService
+      RequireAuthenticatedUserRouteGuardService,
+      CaughtErrorsHandler
    ],
    bootstrap: [AppComponent]
 })

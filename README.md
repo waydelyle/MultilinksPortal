@@ -20,10 +20,4 @@ TODO: Project description here
    * Return to root project directory => [PATH_TO_REPO_FOLDER]
    * Restore project dependencies => npm install
    * Web Portal should now be ready to launch => ng serve -o
-
-## Build and deploy
-
-   * Install `angular-cli-ghpages` npm package.
-   * Run `ng build --prod` to build project for production.
-   * Run `ngh --dir dist/MultilinksPortal` to deploy to gh-pages branch.
-
+   

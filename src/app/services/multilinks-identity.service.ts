@@ -2,8 +2,7 @@ import { Injectable } from "@angular/core";
 import { UserManager, User } from 'oidc-client';
 import { environment } from 'src/environments/environment';
 import { ReplaySubject } from 'rxjs';
-import { Router } from '@angular/router';
-import { ErrorsHandler } from './errors-handler.service';
+import { CaughtErrorsHandler } from './caught-errors-handler.service';
 
 @Injectable ({
    providedIn: 'root'
@@ -16,6 +15,18 @@ export class MultilinksIdentityService {
    private loggedIn: string = 'userLocallyLoggedIn';
 
    userLoaded$ = new ReplaySubject();
+
+   constructor(private errorsHandler: CaughtErrorsHandler) {
+      this.userManager.clearStaleState();
+
+      this.userManager.events.addUserLoaded(user => {
+         this.currentUser = user;
+         localStorage.setItem(this.loggedIn, 'true');
+         this.userLoaded$.next(true);
+      });
+
+      this.userManager.events.addUserUnloaded(() => {});
+   }
 
    get userAvailable(): boolean {
       return this.currentUser != null;
@@ -30,65 +41,45 @@ export class MultilinksIdentityService {
       return loggedIn != null;
    }
 
-   constructor(private router: Router, private errorsHandler: ErrorsHandler) {
-      this.userManager.clearStaleState();
-
-      this.userManager.events.addUserLoaded(user => {
-         this.currentUser = user;
-         localStorage.setItem(this.loggedIn, 'true');
-         this.userLoaded$.next(true);
-      });
-
-      this.userManager.events.addUserUnloaded(() => {});
-   }
-
    registerUser() {
       window.location.href = environment.multilinksIdentityInfo.registerEndpoint;
    }
 
    triggerSignIn() {
       this.clearUserLoggedInStates();
-      
+
       this.userManager.signinRedirect()
-      .then(function () {
-         if (!environment.production) {
-            console.log('Redirection to signin triggered');
-         }
-      })
-      .catch(error => {
-         let errorCode = this.errorsHandler.convertToErrorCode(error);
-         
-         this.router.navigate(['420']);
-      });
+         .catch(error => {
+            this.errorsHandler.handleCaughtException(error);
+         });
    }
 
    triggerSignOut() {
       this.clearUserLoggedInStates();
 
-      this.userManager.signoutRedirect().then(function (response) {
-         if (!environment.production) {
-            console.log('Redirection to signout triggered');
-         }
-      });
+      this.userManager.signoutRedirect()
+         .catch(error => {
+            this.errorsHandler.handleCaughtException(error);
+         });
    }
 
    handleCallBack() {
-      this.userManager.signinRedirectCallback().then(function (user) {
-         if (!environment.production) {
-            console.log('Callback after sign in handle');
-         }
-      });
+      this.userManager.signinRedirectCallback()
+         .catch(error => {
+            this.errorsHandler.handleCaughtException(error);
+         });
    }
 
-   handleSilentCallback(){
-      this.userManager.signinSilentCallback().then(function (user){
-         if (user != null){
-            this.currentUser = user;
-         }
-         if (!environment.production) {
-            console.log('Callback after silent signin handled.');
-         }
-      })
+   handleSilentCallback() {
+      this.userManager.signinSilentCallback()
+         .then(function (user) {
+            if (user != null) {
+               this.currentUser = user;
+            }
+         })
+         .catch(error => {
+            this.errorsHandler.handleCaughtException(error);
+         });
    }
 
    clearUserLoggedInStates() {
