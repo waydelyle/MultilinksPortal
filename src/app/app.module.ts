@@ -19,6 +19,7 @@ import { AddAuthorizationHeaderInterceptor } from './intercepters/add-authorizat
 import { ConnectionLoaderComponent } from './components/shared/connection-loader/connection-loader.component';
 import { RegistrationConfirmedComponent } from './components/identity-service-callbacks/registration-confirmed/registration-confirmed.component';
 import { Error404Component } from './components/errors/404/404.component';
+import { CaughtErrorsHandler } from './services/caught-errors-handler.service';
 
 @NgModule({
    declarations: [
@@ -52,7 +53,8 @@ import { Error404Component } from './components/errors/404/404.component';
       MultilinksIdentityService,
       MultilinksCoreService,
       ExponentialBackoffRetryService,
-      RequireAuthenticatedUserRouteGuardService
+      RequireAuthenticatedUserRouteGuardService,
+      CaughtErrorsHandler
    ],
    bootstrap: [AppComponent]
 })
