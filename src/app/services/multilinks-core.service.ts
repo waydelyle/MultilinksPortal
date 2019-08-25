@@ -60,7 +60,7 @@ export class MultilinksCoreService {
 
    /* This is getting current device info from the backend */
    deviceLoginInitialisation(): void {
-      this.http.get<DeviceDetail>(environment.multilinksCoreInfo.loginEndpoint).subscribe(
+      this.http.get<DeviceDetail>(`${environment.multilinksCoreInfo.loginEndpoint}/${environment.multilinksIdentityInfo.device_name}`).subscribe(
          data => {
             this.currentDevice = data;
             this.deviceLoaded$.next(true);
@@ -76,7 +76,7 @@ export class MultilinksCoreService {
    }
 
    sendNewLinkRequest(requestInfo: LinkRequestInfo) {
-      return this.http.post(`${environment.multilinksCoreInfo.loginEndpoint}`, requestInfo);
+      return this.http.post(`${environment.multilinksCoreInfo.linksEndpoint}`, requestInfo);
    }
 
    getLinksPendings(limit: number, offset: number): void {

@@ -245,3 +245,4 @@ _Pvt_Extensions
 *.key
 **/.vscode/**
 SpaClient/src/assets/images/profile.png
+src/environments/environment.prod.ts

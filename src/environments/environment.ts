@@ -6,7 +6,7 @@ export const environment = {
    production: false,
    releaseInfo: {
       type: 'pre-alpha',
-      version: '0.01.03'
+      version: '0.01.04'
    },
    multilinksIdentityInfo: {
       oidcInfo: {
@@ -23,7 +23,7 @@ export const environment = {
       registerEndpoint:                   'https://localhost:44300/account/register'
    },
    multilinksCoreInfo: {
-      loginEndpoint:                      'https://localhost:44301/api/endpoints/login/Web%20Portal',
+      loginEndpoint:                      'https://localhost:44301/api/endpoints/login',
       linksEndpoint:                      'https://localhost:44301/api/endpointlinks',
       notificationsEndpoint:              'https://localhost:44301/api/notifications',
       signalRInfo: {
