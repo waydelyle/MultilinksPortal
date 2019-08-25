@@ -13,7 +13,7 @@ export class AppComponent {
    loadingInProgress: boolean = true;
    connectionActive: boolean;
 
-   constructor(private identityService: MultilinksIdentityService,
+   constructor(public identityService: MultilinksIdentityService,
       private coreService: MultilinksCoreService) {}
 
    ngOnInit() {

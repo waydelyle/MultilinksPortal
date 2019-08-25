@@ -7,8 +7,8 @@ import { MultilinksCoreService } from 'src/app/services/multilinks-core.service'
 })
 export class ConnectionLoaderComponent implements OnInit {
 
-   private reconnectionInProgress: boolean;
-   private connectionActive: boolean;
+   reconnectionInProgress: boolean;
+   connectionActive: boolean;
 
    constructor(private coreService: MultilinksCoreService) { }
 

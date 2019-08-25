@@ -12,7 +12,7 @@ export class SharedHeaderComponent {
    releaseInfo: string;
    
    constructor(private appEnv: AppEnvironment,
-      private identityService: MultilinksIdentityService) {
+      public identityService: MultilinksIdentityService) {
       this.releaseInfo = this.appEnv.getReleaseInfo();
    }
 }
