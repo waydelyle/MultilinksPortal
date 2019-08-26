@@ -15,6 +15,7 @@ import { ExponentialBackoffRetry } from '../models/exponential-backoff-retry.mod
 import { HubConnection, HubConnectionBuilder, LogLevel, HubConnectionState } from '@aspnet/signalr';
 import { ExponentialBackoffRetryService } from './exponential-backoff-retry.service';
 import { MultilinksIdentityService } from './multilinks-identity.service';
+import { CaughtErrorsHandler } from './caught-errors-handler.service';
 
 @Injectable()
 export class MultilinksCoreService {
@@ -44,7 +45,8 @@ export class MultilinksCoreService {
 
    constructor(private http: HttpClient,
       private retryService: ExponentialBackoffRetryService,
-      private identityService: MultilinksIdentityService) {
+      private identityService: MultilinksIdentityService,
+      private errorsHandler: CaughtErrorsHandler) {
       this.linkPendingCollection = new LinkPendingCollection();
       this.linkPendingCollection.value = new Array<LinkPendingDetail>();
       this.linksCollection = new LinkCollection();
@@ -65,8 +67,8 @@ export class MultilinksCoreService {
             this.currentDevice = data;
             this.deviceLoaded$.next(true);
          },
-         (error: HttpErrorResponse) => {
-            console.log(error.error.message);
+         (error) => {
+            this.errorsHandler.handleCaughtException(error);
          }
       );
    }
