@@ -6,7 +6,7 @@ export const environment = {
    production: false,
    releaseInfo: {
       type: 'pre-alpha',
-      version: '0.01.04'
+      version: '0.01.04 (testing environment)'
    },
    multilinksIdentityInfo: {
       oidcInfo: {
