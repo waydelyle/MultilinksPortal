@@ -62,13 +62,16 @@ export class MultilinksCoreService {
 
    /* This is getting current device info from the backend */
    deviceLoginInitialisation(): void {
+      this.reconnectionInProgress$.next(true);
+
       this.http.get<DeviceDetail>(`${environment.multilinksCoreInfo.loginEndpoint}/${environment.multilinksIdentityInfo.device_name}`).subscribe(
          data => {
             this.currentDevice = data;
             this.deviceLoaded$.next(true);
          },
          (error) => {
-            this.errorsHandler.handleCaughtException(error);
+            /* TODO: Add retry */
+            this.reconnectionInProgress$.next(false);
          }
       );
    }
@@ -379,7 +382,6 @@ export class MultilinksCoreService {
          }
 
          this.reconnectionInProgress$.next(false);
-         this.connectionActive$.next(false);
          return;
       }
 

@@ -19,7 +19,6 @@ export class SigninCallbackComponent implements OnInit{
       this.identityService.userLoaded$.subscribe((userLoaded) => {
          if (userLoaded) {
             this.coreService.deviceLoginInitialisation();
-            console.log("Device login successful.");
             this.router.navigate(['/']);
          }
       });

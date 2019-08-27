@@ -23,6 +23,6 @@ export class ConnectionLoaderComponent implements OnInit {
    }
 
    connect(): void {
-      this.coreService.reconnectSignalRConnection();
+      this.coreService.deviceLoginInitialisation();
    }
 }
