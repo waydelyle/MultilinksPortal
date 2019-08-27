@@ -1,12 +1,14 @@
 <div *ngIf="!loadingInProgress" id="wrapper">
-   <div *ngIf="!identityService.isLoggedIn || connectionActive">
-      <shared-header></shared-header>
-      <div id="page-wrapper">
+   <shared-header></shared-header>
+
+   <div id="page-wrapper">
+      <div *ngIf="!identityService.isLoggedIn || connectionActive">
          <router-outlet></router-outlet>
       </div>
-      <shared-footer></shared-footer>
+      <div *ngIf="identityService.isLoggedIn && !connectionActive">
+         <connection-loader></connection-loader>
+      </div>
    </div>
-   <div *ngIf="identityService.isLoggedIn && !connectionActive">
-      <connection-loader></connection-loader>
-   </div>
+   
+   <shared-footer></shared-footer>
 </div>
