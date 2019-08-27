@@ -11,7 +11,12 @@
       </a>
    </div>
 
-   <guest-navbar-top></guest-navbar-top>
+   <div *ngIf="!identityService.isLoggedIn">
+      <guest-navbar-top></guest-navbar-top>
+   </div>
+   <div *ngIf="identityService.isLoggedIn">
+      <user-navbar-top></user-navbar-top>
+   </div>
 
    <div *ngIf="identityService.isLoggedIn && connectionActive" class="navbar-default sidebar" role="navigation">
       <div class="sidebar-nav navbar-collapse">
