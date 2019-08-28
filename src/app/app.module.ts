@@ -24,6 +24,7 @@ import { Error599Component } from './components/errors/599/599.component';
 import { SigninCallbackComponent } from './components/identity-service-callbacks/signin-callback/signin-callback.component';
 import { UserNavbarTopComponent } from './components/shared/header/user-navbar-top.component';
 import { SignoutCallbackComponent } from './components/identity-service-callbacks/signout-callback/signout-callback.component';
+import { PasswordResetConfirmedComponent } from './components/identity-service-callbacks/password-reset-confirmed/password-reset-confirmed.component';
 
 @NgModule({
    declarations: [
@@ -38,7 +39,8 @@ import { SignoutCallbackComponent } from './components/identity-service-callback
       Error599Component,
       SigninCallbackComponent,
       UserNavbarTopComponent,
-      SignoutCallbackComponent
+      SignoutCallbackComponent,
+      PasswordResetConfirmedComponent
    ],
    imports: [
       BrowserModule,
@@ -47,11 +49,12 @@ import { SignoutCallbackComponent } from './components/identity-service-callback
       RouterModule.forRoot([
          { path: '', redirectTo: 'home', pathMatch: 'full' },
          { path: 'home', component: HomeComponent },
-         { path: 'identity-registration-confirmed', component: RegistrationConfirmedComponent },
          { path: 'error-404', component: Error404Component },
          { path: 'error-599', component: Error599Component },
+         { path: 'identity-registration-confirmed', component: RegistrationConfirmedComponent },
          { path: 'identity-signin-callback', component: SigninCallbackComponent },
          { path: 'identity-signout-callback', component: SignoutCallbackComponent },
+         { path: 'identity-password-reset-confirmed', component: PasswordResetConfirmedComponent },
          { path: '**', redirectTo: 'error-404' }
       ])
    ],

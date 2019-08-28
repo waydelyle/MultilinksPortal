@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MultilinksIdentityService } from 'src/app/services/multilinks-identity.service';
 import { MultilinksCoreService } from 'src/app/services/multilinks-core.service';
@@ -8,7 +8,7 @@ import { MultilinksCoreService } from 'src/app/services/multilinks-core.service'
    templateUrl: './signin-callback.component.html'
 })
 
-export class SigninCallbackComponent implements OnInit{
+export class SigninCallbackComponent {
 
    constructor(private identityService: MultilinksIdentityService,
       private coreService: MultilinksCoreService,
