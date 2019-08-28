@@ -23,6 +23,7 @@ import { CaughtErrorsHandler } from './services/caught-errors-handler.service';
 import { Error599Component } from './components/errors/599/599.component';
 import { SigninCallbackComponent } from './components/identity-service-callbacks/signin-callback/signin-callback.component';
 import { UserNavbarTopComponent } from './components/shared/header/user-navbar-top.component';
+import { SignoutCallbackComponent } from './components/identity-service-callbacks/signout-callback/signout-callback.component';
 
 @NgModule({
    declarations: [
@@ -36,7 +37,8 @@ import { UserNavbarTopComponent } from './components/shared/header/user-navbar-t
       Error404Component,
       Error599Component,
       SigninCallbackComponent,
-      UserNavbarTopComponent
+      UserNavbarTopComponent,
+      SignoutCallbackComponent
    ],
    imports: [
       BrowserModule,
@@ -49,6 +51,7 @@ import { UserNavbarTopComponent } from './components/shared/header/user-navbar-t
          { path: 'error-404', component: Error404Component },
          { path: 'error-599', component: Error599Component },
          { path: 'identity-signin-callback', component: SigninCallbackComponent },
+         { path: 'identity-signout-callback', component: SignoutCallbackComponent },
          { path: '**', redirectTo: 'error-404' }
       ])
    ],
