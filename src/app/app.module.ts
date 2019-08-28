@@ -22,6 +22,7 @@ import { Error404Component } from './components/errors/404/404.component';
 import { CaughtErrorsHandler } from './services/caught-errors-handler.service';
 import { Error599Component } from './components/errors/599/599.component';
 import { SigninCallbackComponent } from './components/identity-service-callbacks/signin-callback/signin-callback.component';
+import { UserNavbarTopComponent } from './components/shared/header/user-navbar-top.component';
 
 @NgModule({
    declarations: [
@@ -34,7 +35,8 @@ import { SigninCallbackComponent } from './components/identity-service-callbacks
       RegistrationConfirmedComponent,
       Error404Component,
       Error599Component,
-      SigninCallbackComponent
+      SigninCallbackComponent,
+      UserNavbarTopComponent
    ],
    imports: [
       BrowserModule,

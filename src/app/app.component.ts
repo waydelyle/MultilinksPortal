@@ -17,14 +17,9 @@ export class AppComponent {
       private coreService: MultilinksCoreService) {}
 
    ngOnInit() {
-      if (this.identityService.isLoggedIn)
+      if (this.identityService.isLoggedIn && this.connectionActive)
       {
-         var element = document.querySelector('#page-wrapper');
-
-         if (element != null)
-         {
-            element.classList.add('sidebar-placeholder');
-         }
+         this.showSidebar();
       }
 
       this.coreService.deviceLoaded$.subscribe((deviceLoaded) => {
@@ -58,12 +53,18 @@ export class AppComponent {
          if (connectionActive) {
             const holdoffTimer = timer(3000).subscribe(() => {
                this.connectionActive = true;
+               this.showSidebar();
             });
          }
-         else {
-            this.connectionActive = false;
-         }
       });
+   }
+
+   private showSidebar() {
+      var element = document.querySelector('#page-wrapper');
+
+      if (element != null) {
+         element.classList.add('sidebar-placeholder');
+      }
    }
 
    @HostListener('window:onunload')
