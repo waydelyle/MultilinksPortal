@@ -25,6 +25,7 @@ import { SigninCallbackComponent } from './components/identity-service-callbacks
 import { UserNavbarTopComponent } from './components/shared/header/user-navbar-top.component';
 import { SignoutCallbackComponent } from './components/identity-service-callbacks/signout-callback/signout-callback.component';
 import { PasswordResetConfirmedComponent } from './components/identity-service-callbacks/password-reset-confirmed/password-reset-confirmed.component';
+import { SilentRenewCallbackComponent } from './components/identity-service-callbacks/silent-renew-callback/silent-renew-callback.component';
 
 @NgModule({
    declarations: [
@@ -40,7 +41,8 @@ import { PasswordResetConfirmedComponent } from './components/identity-service-c
       SigninCallbackComponent,
       UserNavbarTopComponent,
       SignoutCallbackComponent,
-      PasswordResetConfirmedComponent
+      PasswordResetConfirmedComponent,
+      SilentRenewCallbackComponent
    ],
    imports: [
       BrowserModule,
@@ -55,6 +57,7 @@ import { PasswordResetConfirmedComponent } from './components/identity-service-c
          { path: 'identity-signin-callback', component: SigninCallbackComponent },
          { path: 'identity-signout-callback', component: SignoutCallbackComponent },
          { path: 'identity-password-reset-confirmed', component: PasswordResetConfirmedComponent },
+         { path: 'identity-silent-renew-callback', component: SilentRenewCallbackComponent },
          { path: '**', redirectTo: 'error-404' }
       ])
    ],
