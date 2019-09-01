@@ -69,7 +69,7 @@ export class AppComponent {
 
    @HostListener('window:onunload')
    beforeUnloadHander() {
-      /* Any resource clean up can be done here before we close the Web Console. */
+      /* Any resource clean up can be done here before we close Multilinks Portal. */
       this.coreService.finaliseSignalRConnection();
    }
 }
