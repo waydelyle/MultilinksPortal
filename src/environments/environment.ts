@@ -16,7 +16,7 @@ export const environment = {
          post_logout_redirect_uri: 'https://localhost:44302/identity-signout-callback',
          silent_redirect_uri: 'https://localhost:44302/identity-silent-renew-callback',
          response_type: 'code',
-         scope: 'openid profile roles ApiService',
+         scope: 'openid profile roles CoreService',
          automaticSilentRenew: true
       },
       device_name: 'Web%20Portal',
