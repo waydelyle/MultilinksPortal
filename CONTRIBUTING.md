@@ -73,12 +73,14 @@ Unsure where to begin contributing to Multilinks Portal? You can start by lookin
 
 Multilinks Portal can be developed locally:
 
-   * Getting Things Up & Running (Windows environment):
-      + Install [Git](https://git-scm.com/)
-      + Clone repository => git clone https://github.com/ChrisDinhNZ/MultilinksPortal.git
+   * Getting Things Up & Running (Windows environment with VS Code):
+      + Install [Git](https://git-scm.com)
+      + Install [VS Code](https://code.visualstudio.com)
+      + Fork this MultilinksPortal repository
+      + Clone your forked repository locally `git clone https://github.com/<your-github-account>/MultilinksPortal.git`
       + Open Git Bash integrated terminal in Visual Studio Code
-      + Change to ssl directory => [PATH_TO_REPO_FOLDER]/ssl
-      + Generate key/cert pair => bash generate.sh
+      + Change to ssl directory `[LOCAL_REPO_FOLDER]/ssl`
+      + Generate key/cert pair `bash generate.sh`
       + Add generated certificate to trusted list:
          - In File Explorer, double click on "server.crt"
          - Click "Install Certificate"
@@ -88,8 +90,18 @@ Multilinks Portal can be developed locally:
          - Click "Next"
          - Click "Finish"
          - Click "OK" to close remaining dialogs
-      + Return to root project directory => [PATH_TO_REPO_FOLDER]
-      + Restore project dependencies => npm install
-      + Launch Web Portal => ng serve -o
+      + Change to the root folder of your cloned repository
+      + Restore project dependencies `npm install`
+      + Launch Web Portal `ng serve -o`
+
+   * Occasionally you will want to merge changes in the upstream repository (the original MultilinksPortal repository) with your fork:
+      + Change to the root folder of your cloned repository
+      + Change to the master branch `git checkout master`
+      + Pull any changes from the original MultilinksPortal repository to your local master branch `git pull https://github.com/ChrisDinhNZ/MultilinksPortal.git master`
+      + Manage any merge conflicts and commit your changes `git commit -m <your-commit-message>`
+      + Push your changes to your forked repository `git push`
+
+   * Creating a pull request
+      + You can follow this [guide](https://help.github.com/en/articles/creating-a-pull-request-from-a-fork) to create a pull request
 
 [help-wanted]:https://github.com/ChrisDinhNZ/MultilinksPortal/labels/help%20wanted
