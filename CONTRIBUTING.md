@@ -92,7 +92,8 @@ Multilinks Portal can be developed locally:
          - Click "OK" to close remaining dialogs
       + Change to the root folder of your cloned repository
       + Restore project dependencies `npm install`
-      + Launch Web Portal `ng serve -o`
+      + Ensure `Multilinks Identity` and `Multilinks Core` are up and running
+      + Launch Multilinks Portal `ng serve -o`
 
    * Occasionally you will want to merge changes in the upstream repository (the original MultilinksPortal repository) with your fork:
       + Change to the root folder of your cloned repository
