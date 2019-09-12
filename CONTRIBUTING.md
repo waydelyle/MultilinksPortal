@@ -21,6 +21,8 @@ This project and everyone participating in it is governed by the [Code of Conduc
 
 ## How Can You Contribute?
 
+> **Note:** In order to keep the projects maintainable, all contribution should be tracked as [GitHub issues](https://guides.github.com/features/issues/). Please ensure the appropriate issue is assigned to you prior to working on it.
+
 ### Reporting Bugs
 
 This section guides you through submitting a bug report. Following these guidelines helps maintainers and the community understand your report :pencil:, reproduce the behavior :computer: :computer:, and find related reports :mag_right:.
