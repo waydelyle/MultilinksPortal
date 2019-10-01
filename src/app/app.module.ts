@@ -26,6 +26,7 @@ import { UserNavbarTopComponent } from './components/shared/header/user-navbar-t
 import { SignoutCallbackComponent } from './components/identity-service-callbacks/signout-callback/signout-callback.component';
 import { PasswordResetConfirmedComponent } from './components/identity-service-callbacks/password-reset-confirmed/password-reset-confirmed.component';
 import { SilentRenewCallbackComponent } from './components/identity-service-callbacks/silent-renew-callback/silent-renew-callback.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
    declarations: [
@@ -42,7 +43,8 @@ import { SilentRenewCallbackComponent } from './components/identity-service-call
       UserNavbarTopComponent,
       SignoutCallbackComponent,
       PasswordResetConfirmedComponent,
-      SilentRenewCallbackComponent
+      SilentRenewCallbackComponent,
+      DashboardComponent
    ],
    imports: [
       BrowserModule,
@@ -50,6 +52,7 @@ import { SilentRenewCallbackComponent } from './components/identity-service-call
       HttpClientModule,
       RouterModule.forRoot([
          { path: '', redirectTo: 'home', pathMatch: 'full' },
+         { path: 'dashboard', component: DashboardComponent, canActivate: [RequireAuthenticatedUserRouteGuardService] },
          { path: 'home', component: HomeComponent },
          { path: 'error-404', component: Error404Component },
          { path: 'error-599', component: Error599Component },
